@@ -38,19 +38,24 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.authorService.getAuthors();
     this.bookListSubscription = this.authorService.authorsUpdate.subscribe(authors => {
       this.authorsList = authors;
-      this.queryParamsSubscription = this.route.queryParams.subscribe(id => {
-        this.idParams = id;
-        if (!this.idParams.id) {
-          this.editBook = true;
-          this.createBookForm();
-        } else {
-          this.bookService.getBook(this.idParams.id);
-          this.bookDetailsSubscription = this.bookService.bookUpdate.subscribe(book => {
-            this.book = book;
+      if (this.authorsList.length >= 1) {
+        this.queryParamsSubscription = this.route.queryParams.subscribe(id => {
+          this.idParams = id;
+          if (!this.idParams.id) {
+            this.editBook = true;
             this.createBookForm();
-          });
-        }
-      });
+          } else {
+            this.bookService.getBook(this.idParams.id);
+            this.bookDetailsSubscription = this.bookService.bookUpdate.subscribe(book => {
+              this.book = book;
+              this.createBookForm();
+            });
+          }
+        });
+      } else {
+        console.warn('No hay autores');
+        this.router.navigate(['/books']);
+      }
     });
   }
 
@@ -88,8 +93,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     if (!!this.bookDetailsSubscription) {
       this.bookDetailsSubscription.unsubscribe();
     }
+    if (!!this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
     this.bookListSubscription.unsubscribe();
-    this.queryParamsSubscription.unsubscribe();
   }
 
 }

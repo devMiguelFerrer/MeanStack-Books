@@ -1,0 +1,13 @@
+mat-list {
+  max-width: 400px;
+  min-width: 280px;
+  margin-top: 1rem;
+}
+section {
+  display: flex;
+  justify-content: center;
+}
+
+mat-list-item {
+  cursor: pointer;
+}

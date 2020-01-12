@@ -1,1 +1,10 @@
-<p>author-list works!</p>
+<section>
+  <mat-list class="mat-elevation-z2">
+    <mat-list-item><b>Lista de Autores</b></mat-list-item>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let author of authorList">
+      <mat-list-item (click)="handlerAuthorDetails(author._id)">{{ author.firstName }} {{ author.lastName }}</mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-list>
+</section>

@@ -1,1 +1,26 @@
-<p>author-details works!</p>
+<section>
+
+  <mat-card *ngIf="author && !editAuthor">
+    <mat-card-title>{{ author.firstName }} {{ author.lastName }}</mat-card-title>
+    <mat-card-actions class="btnCard">
+      <button mat-raised-button color="accent" (click)="handlerEditAuthor()">Editar</button>
+      <button mat-raised-button color="warn" (click)="handlerDeleteAuthor(author._id)">Borrar</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <form *ngIf="author && editAuthor" [formGroup]="authorForm" (ngSubmit)="handlerSubmitAuthor()">
+    <mat-card class="d-grid">
+      <mat-form-field class="example-full-width">
+        <input placeholder="Nombre del Autor:" matInput type="text" formControlName="firstName">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input placeholder="Apellido del Autor:" matInput formControlName="lastName">
+      </mat-form-field>
+      <mat-card-actions class="btnCard">
+        <button mat-raised-button color="warn" type="button" (click)="handlerEditAuthor()">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!authorForm.valid">Guardar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+
+</section>

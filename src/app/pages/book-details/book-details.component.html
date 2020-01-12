@@ -1,1 +1,36 @@
-<p>book-details works!</p>
+<section>
+
+  <mat-card *ngIf="book && !editBook">
+    <mat-card-title>{{ book.name }}</mat-card-title>
+    <mat-card-subtitle *ngIf="!!book.author">{{ book.author.firstName }} {{ book.author.lastName }}</mat-card-subtitle>
+    <mat-card-content>ISBN: {{ book.isbn }}</mat-card-content>
+    <mat-card-actions class="btnCard">
+      <button mat-raised-button color="accent" (click)="handlerEditBook()">Editar</button>
+      <button mat-raised-button color="warn" (click)="handlerDeleteBook(book._id)">Borrar</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <form *ngIf="book && editBook" [formGroup]="bookForm" (ngSubmit)="handlerSubmitBook()">
+    <mat-card class="d-grid">
+      <mat-form-field class="example-full-width">
+        <input placeholder="Nombre del libro:" matInput type="text" formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Autor:</mat-label>
+        <mat-select formControlName="author">
+          <mat-option *ngFor="let author of authorsList" [value]="author._id">
+            {{author.firstName}} {{author.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input placeholder="ISBN:" matInput formControlName="isbn">
+      </mat-form-field>
+      <mat-card-actions class="btnCard">
+        <button mat-raised-button color="warn" type="button" (click)="handlerEditBook()">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!bookForm.valid">Guardar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+
+</section>

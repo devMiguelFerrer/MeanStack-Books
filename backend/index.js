@@ -2,11 +2,15 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const errorHandler = require('../backend/middlewares/errorHandler');
+const cors = require('cors');
 
 const app = express();
 
 // Load env vars
 dotenv.config({ path: './backend/config/config.env' });
+
+//  CORS
+app.use(cors());
 
 //  Connect to DB
 connectDB();
@@ -19,8 +23,8 @@ const author = require('./routes/author');
 app.use(express.json());
 
 //  Mount routes
-app.use(book);
-app.use(author);
+app.use('/api', book);
+app.use('/api', author);
 
 //  Error handler
 app.use(errorHandler);

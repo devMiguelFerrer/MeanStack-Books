@@ -1,1 +1,10 @@
-<p>book-list works!</p>
+<section>
+  <mat-list class="mat-elevation-z2">
+    <mat-list-item><b>Lista de libros</b></mat-list-item>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let book of bookList">
+      <mat-list-item (click)="handlerBookDetails(book._id)">{{ book.name }}</mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-list>
+</section>

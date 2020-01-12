@@ -1,0 +1,23 @@
+mat-card {
+  max-width: 400px;
+  min-width: 280px;
+  margin-top: 1rem;
+}
+
+mat-card-title {
+  text-align: center;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+}
+
+.btnCard {
+  display: flex;
+  justify-content: space-around;
+}
+
+.d-grid {
+  display: grid;
+}

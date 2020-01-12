@@ -75,6 +75,22 @@ export class BookService {
     this.http.put<IResponseAPI>(`${this.URL}/book/${ID}`, book).subscribe(
       (responseAPI) => {
         if (responseAPI.success) {
+          this.router.navigate(['/books']);
+        } else {
+          console.warn(responseAPI);
+        }
+      }
+    );
+  }
+
+  /**
+   * CREATE a book
+   * @return void
+   */
+  public createBook(book: IBook): void {
+    this.http.post<IResponseAPI>(`${this.URL}/book`, book).subscribe(
+      (responseAPI) => {
+        if (responseAPI.success) {
           this.router.navigate(['/']);
         } else {
           console.warn(responseAPI);

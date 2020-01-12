@@ -3,7 +3,7 @@
   <mat-card *ngIf="author && !editAuthor">
     <mat-card-title>{{ author.firstName }} {{ author.lastName }}</mat-card-title>
     <mat-card-actions class="btnCard">
-      <button mat-raised-button color="accent" (click)="handlerEditAuthor()">Editar</button>
+      <button mat-raised-button color="accent" (click)="handlerCancelEditAuthor()">Editar</button>
       <button mat-raised-button color="warn" (click)="handlerDeleteAuthor(author._id)">Borrar</button>
     </mat-card-actions>
   </mat-card>
@@ -17,7 +17,7 @@
         <input placeholder="Apellido del Autor:" matInput formControlName="lastName">
       </mat-form-field>
       <mat-card-actions class="btnCard">
-        <button mat-raised-button color="warn" type="button" (click)="handlerEditAuthor()">Cancelar</button>
+        <button mat-raised-button color="warn" type="button" (click)="handlerCancelEditAuthor()">Cancelar</button>
         <button mat-raised-button color="primary" type="submit" [disabled]="!authorForm.valid">Guardar</button>
       </mat-card-actions>
     </mat-card>

@@ -1,6 +1,7 @@
+import { Author } from './../../models/author.class';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -19,17 +20,24 @@ export class AuthorDetailsComponent implements OnInit, OnDestroy {
   authorForm: FormGroup;
   author: IAuthor;
   editAuthor: boolean;
+  idParams: Params;
 
-  constructor(private route: ActivatedRoute, private authorService: AuthorService) { }
+  constructor(private route: ActivatedRoute, private authorService: AuthorService, private router: Router) { }
 
   ngOnInit() {
     this.editAuthor = false;
     this.queryParamsSubscription = this.route.queryParams.subscribe(id => {
-      this.authorService.getAuthor(id.id);
-    });
-    this.authorDetailsSubscription = this.authorService.authorUpdate.subscribe(author => {
-      this.author = author;
-      this.createBookForm();
+      this.idParams = id;
+      if (!this.idParams.id) {
+        this.editAuthor = true;
+        this.createBookForm();
+      } else {
+        this.authorService.getAuthor(this.idParams.id);
+        this.authorDetailsSubscription = this.authorService.authorUpdate.subscribe(author => {
+          this.author = author;
+          this.createBookForm();
+        });
+      }
     });
   }
 
@@ -37,15 +45,25 @@ export class AuthorDetailsComponent implements OnInit, OnDestroy {
     this.authorService.deleteAuthor(id);
   }
 
-  handlerEditAuthor() {
+  handlerCancelEditAuthor() {
     this.editAuthor = !this.editAuthor;
+    if (!this.idParams.id) {
+      this.router.navigate(['/authors']);
+    }
   }
 
   handlerSubmitAuthor() {
-    this.authorService.updateAuthor(this.author._id, this.authorForm.value);
+    if (!!this.author._id) {
+      this.authorService.updateAuthor(this.author._id, this.authorForm.value);
+    } else {
+      this.authorService.createAuthors(this.authorForm.value);
+    }
   }
 
   createBookForm() {
+    if (!this.author) {
+      this.author = new Author('', '');
+    }
     this.authorForm = new FormGroup({
       firstName: new FormControl(
         this.author.firstName, { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)] }
@@ -58,7 +76,9 @@ export class AuthorDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
-    this.authorDetailsSubscription.unsubscribe();
+    if (!!this.authorDetailsSubscription) {
+      this.authorDetailsSubscription.unsubscribe();
+    }
   }
 
 }

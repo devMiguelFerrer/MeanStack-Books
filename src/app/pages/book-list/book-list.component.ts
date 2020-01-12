@@ -27,6 +27,10 @@ export class BookListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/book'], { queryParams: { id } });
   }
 
+  handlerFabBtn() {
+    this.router.navigate(['/book']);
+  }
+
   ngOnDestroy() {
     this.bookListSubscription.unsubscribe();
   }

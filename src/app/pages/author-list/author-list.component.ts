@@ -27,6 +27,10 @@ export class AuthorListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/author'], { queryParams: { id } });
   }
 
+  handlerFabBtn() {
+    this.router.navigate(['/author']);
+  }
+
   ngOnDestroy() {
     this.authorListSubscription.unsubscribe();
   }

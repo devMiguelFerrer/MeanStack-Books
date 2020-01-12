@@ -5,7 +5,7 @@
     <mat-card-subtitle *ngIf="!!book.author">{{ book.author.firstName }} {{ book.author.lastName }}</mat-card-subtitle>
     <mat-card-content>ISBN: {{ book.isbn }}</mat-card-content>
     <mat-card-actions class="btnCard">
-      <button mat-raised-button color="accent" (click)="handlerEditBook()">Editar</button>
+      <button mat-raised-button color="accent" (click)="handlerCancelEditBook()">Editar</button>
       <button mat-raised-button color="warn" (click)="handlerDeleteBook(book._id)">Borrar</button>
     </mat-card-actions>
   </mat-card>
@@ -27,7 +27,7 @@
         <input placeholder="ISBN:" matInput formControlName="isbn">
       </mat-form-field>
       <mat-card-actions class="btnCard">
-        <button mat-raised-button color="warn" type="button" (click)="handlerEditBook()">Cancelar</button>
+        <button mat-raised-button color="warn" type="button" (click)="handlerCancelEditBook()">Cancelar</button>
         <button mat-raised-button color="primary" type="submit" [disabled]="!bookForm.valid">Guardar</button>
       </mat-card-actions>
     </mat-card>

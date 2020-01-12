@@ -35,6 +35,22 @@ export class AuthorService {
   }
 
   /**
+   * CREATE a author
+   * @return void
+   */
+  public createAuthors(author: IAuthor): void {
+    this.http.post<any>(`${this.URL}/author`, author).subscribe(
+      (responseAPI) => {
+        if (responseAPI.success) {
+          this.router.navigate(['/authors']);
+        } else {
+          console.warn(responseAPI);
+        }
+      }
+    );
+  }
+
+  /**
    * GET details of a author by ID
    * @return void
    */

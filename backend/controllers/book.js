@@ -20,6 +20,21 @@ exports.getBooks = asyncHandler(async (req, res, next) => {
 });
 
 /**
+ * @description Create a book
+ * @route POST /api/books
+ * @access Public
+ */
+exports.createBook = asyncHandler(async (req, res, next) => {
+  const book = await Book.create(req.body);
+
+  return res.json({
+    success: true,
+    controller: 'createBook',
+    data: book
+  });
+});
+
+/**
  * @description Get a book
  * @route GET /api/book/:id
  * @access Public
@@ -35,16 +50,6 @@ exports.getBook = asyncHandler(async (req, res, next) => {
     controller: 'getBook',
     id: req.params.id,
     data: respGetBook
-  });
-});
-
-exports.createBook = asyncHandler(async (req, res, next) => {
-  const respCreateBook = await Book.create(req.body);
-
-  return res.json({
-    success: true,
-    controller: 'createBook',
-    data: respCreateBook
   });
 });
 

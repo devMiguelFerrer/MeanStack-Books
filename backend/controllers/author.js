@@ -17,6 +17,21 @@ exports.getAuthors = asyncHandler(async (req, res, next) => {
 });
 
 /**
+ * @description Create a author
+ * @route POST /api/author
+ * @access Public
+ */
+exports.createAuthor = asyncHandler(async (req, res, next) => {
+  const author = await Author.create(req.body);
+
+  return res.json({
+    success: true,
+    controller: 'createAuthor',
+    data: author
+  });
+});
+
+/**
  * @description Get a author
  * @route GET /api/author/:id
  * @access Public

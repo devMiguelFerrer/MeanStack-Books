@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const errorHandler = require('../backend/middlewares/errorHandler');
 
 const app = express();
 
@@ -20,5 +21,8 @@ app.use(express.json());
 //  Mount routes
 app.use(book);
 app.use(author);
+
+//  Error handler
+app.use(errorHandler);
 
 module.exports = app;

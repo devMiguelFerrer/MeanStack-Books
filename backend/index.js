@@ -10,10 +10,15 @@ dotenv.config({ path: './backend/config/config.env' });
 //  Connect to DB
 connectDB();
 
-app.get('/', (req, res, next) => {
-  res.json({
-    message: 'Server on'
-  });
-});
+//  Load routes
+const book = require('./routes/book');
+const author = require('./routes/author');
+
+// Body parser
+app.use(express.json());
+
+//  Mount routes
+app.use(book);
+app.use(author);
 
 module.exports = app;
